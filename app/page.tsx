@@ -478,6 +478,7 @@ export default function Portfolio() {
           </section>
 
           {/* Contact Section */}
+          {/* Contact Section */}
           <section className="py-16 sm:py-20 bg-black/20 px-4 sm:px-6 lg:px-8">
             <div className="container mx-auto">
               <div className="max-w-2xl mx-auto">
@@ -490,7 +491,7 @@ export default function Portfolio() {
                 </h2>
 
                 <Card
-                  className={`bg-white/10 backdrop-blur-md border-white/20 animate-on-load ${
+                  className={`bg-white/10 backdrop-blur-md border border-white/20 animate-on-load ${
                     isLoaded ? "animate-scale-in animate-delay-1200" : ""
                   }`}
                 >
@@ -500,27 +501,31 @@ export default function Portfolio() {
                         <div>
                           <Input
                             placeholder="Your Name"
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-cyan-400 h-10 sm:h-11"
+                            disabled
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-cyan-400 h-10 sm:h-11 cursor-not-allowed opacity-60"
                           />
                         </div>
                         <div>
                           <Input
                             type="email"
+                            disabled
                             placeholder="Your Email"
-                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-cyan-400 h-10 sm:h-11"
+                            className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-cyan-400 h-10 sm:h-11 cursor-not-allowed opacity-60"
                           />
                         </div>
                       </div>
                       <div>
                         <Textarea
                           placeholder="Tell me about your project..."
+                          disabled
                           rows={4}
-                          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-cyan-400 text-sm sm:text-base"
+                          className="bg-white/10 border-white/20 text-white placeholder:text-gray-400 focus:border-cyan-400 text-sm sm:text-base cursor-not-allowed opacity-60"
                         />
                       </div>
                       <Button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white border-0 h-10 sm:h-11"
+                        disabled
+                        className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white border-0 h-10 sm:h-11 opacity-60 cursor-not-allowed"
                       >
                         <Mail className="mr-2 h-4 w-4" />
                         Send Message
@@ -529,15 +534,26 @@ export default function Portfolio() {
 
                     <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-white/20 text-center">
                       <p className="text-gray-300 mb-3 sm:mb-4 text-sm sm:text-base">
-                        Or reach out directly:
+                        This service is currently in the development phase.
+                        <br />
+                        <span className="font-semibold">
+                          Reach out directly:
+                        </span>
                       </p>
-                      <Link
-                        href="mailto:patilmi4441@gmail.com"
-                        className="text-cyan-400 hover:text-cyan-300 flex items-center justify-center space-x-2 text-sm sm:text-base"
-                      >
-                        <Mail className="h-4 w-4" />
-                        <span>patilmi4441@gmail.com</span>
-                      </Link>
+                      <div className="inline-flex">
+                        <Badge
+                          variant="secondary"
+                          className="bg-white/10 text-white border-white/20 hover:text-black text-xs sm:text-sm"
+                        >
+                          <Link
+                            href="mailto:patilmi4441@gmail.com"
+                            className="text-cyan-400 flex items-center justify-center space-x-2 text-sm sm:text-base"
+                          >
+                            <Mail className="h-4 w-4" />
+                            <span>patilmi4441@gmail.com</span>
+                          </Link>
+                        </Badge>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
