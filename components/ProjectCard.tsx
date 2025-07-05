@@ -1,8 +1,6 @@
-// /components/ProjectCard.tsx
-
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -30,45 +28,32 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   software = [],
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const imageCarouselRef = useRef(null);
+  const imageCarouselRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  const navigateToProject = () => {
+    const targetSlug =
+      slug ||
+      projectId ||
+      title
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "");
+
+    router.push(`/projects?project=${targetSlug}`);
+  };
 
   const handleCardClick = (e: React.MouseEvent) => {
     if (imageCarouselRef.current?.contains(e.target as Node)) return;
-
-    // Navigate to projects page with the specific project opened
-    if (slug) {
-      router.push(`/projects?project=${slug}`);
-    } else if (projectId) {
-      router.push(`/projects?project=${projectId}`);
-    } else {
-      const titleSlug = title
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9-]/g, "");
-      router.push(`/projects?project=${titleSlug}`);
-    }
+    navigateToProject();
   };
 
-  // Handle thumbnail click in carousel
   const handleThumbnailClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-
-    // Same navigation logic as card click
-    if (slug) {
-      router.push(`/projects?project=${slug}`);
-    } else if (projectId) {
-      router.push(`/projects?project=${projectId}`);
-    } else {
-      const titleSlug = title
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9-]/g, "");
-      router.push(`/projects?project=${titleSlug}`);
-    }
+    navigateToProject();
   };
 
-  const cardVariants = {
+  const cardVariants: Variants = {
     initial: { scale: 1, rotateY: 0 },
     hover: {
       scale: 1.02,
@@ -77,7 +62,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     },
   };
 
-  const contentVariants = {
+  const contentVariants: Variants = {
     initial: { opacity: 0, y: 10 },
     hover: {
       opacity: 1,
@@ -86,11 +71,9 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     },
   };
 
-  // Find the first image in the media array to use as thumbnail
   const thumbnailImage =
     media.find((item) => item.type === "image")?.url || "/placeholder.svg";
 
-  // Software logo mapping (same as in projects page)
   const softwareLogos: { [key: string]: string } = {
     "Unreal Engine": "/UEWhite.png",
     Blender: "/blender-whitecom.png",
@@ -115,7 +98,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
       onMouseLeave={() => setIsHovered(false)}
       onClick={handleCardClick}
     >
-      {/* Main thumbnail image */}
       <div className="relative h-[60%] overflow-hidden">
         <Image
           src={thumbnailImage}
@@ -128,15 +110,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           }}
         />
 
-        {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-        {/* Media count indicator */}
         <div className="absolute top-4 right-4 px-3 py-1 bg-black/40 backdrop-blur-sm rounded-full text-white text-sm">
           {media.length} media
         </div>
 
-        {/* Category tags */}
         {category && (
           <div className="absolute top-4 left-4 flex flex-wrap gap-2">
             {(Array.isArray(category) ? category.slice(0, 2) : [category]).map(
@@ -152,7 +131,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         )}
 
-        {/* Hover overlay with additional media thumbnails */}
         {isHovered && media.length > 1 && (
           <motion.div
             className="absolute bottom-4 left-4 right-4 flex gap-2 overflow-x-auto"
@@ -200,7 +178,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         )}
       </div>
 
-      {/* Content section */}
       <div className="relative h-[40%] p-6 flex flex-col justify-between">
         <div>
           <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-200 transition-colors line-clamp-2">
@@ -211,7 +188,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </p>
         </div>
 
-        {/* Software badges */}
         {software.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-4">
             {software.slice(0, 4).map((soft, i) => (
@@ -239,7 +215,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           </div>
         )}
 
-        {/* Hover effect indicators */}
         <motion.div
           className="absolute inset-0 bg-gradient-to-t from-purple-600/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
           variants={contentVariants}
@@ -248,7 +223,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         />
       </div>
 
-      {/* Click to view indicator */}
       <motion.div
         className="absolute bottom-4 right-4 text-white/60 text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         variants={contentVariants}
@@ -258,7 +232,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         Click to view project
       </motion.div>
 
-      {/* Glow effect */}
       <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/50 to-blue-600/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-lg -z-10" />
     </motion.div>
   );
