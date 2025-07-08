@@ -40,9 +40,30 @@ export default function Portfolio() {
         <div className="min-h-screen bg-animated-gradient">
           {/* Hero Section */}
           <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 sm:px-6 lg:px-8">
-            {/* Background blur effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-500/10 backdrop-blur-3xl"></div>
-
+            {/* Background video */}
+            <div className="absolute inset-0">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                onLoadedData={() => {
+                  // Trigger animations after video loads
+                  setTimeout(() => {
+                    setIsLoaded(true);
+                  }, 1000); // 1 second delay after video loads
+                }}
+              >
+                <source src="/Project_Media/Videos/LS_Slow-Track-Shot.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              {/* Overlay for better text readability */}
+              <div className="absolute inset-0 bg-black/40"></div>
+              {/* Optional: Keep some blur effect over video */}
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-500/10 backdrop-blur-sm"></div>
+            </div>
+          
             <div className="container mx-auto relative z-10 max-w-7xl">
               {/* Desktop Layout: 3-column grid */}
               <div className="hidden lg:grid lg:grid-cols-[1fr_24px_1fr] items-center gap-8 xl:gap-12">

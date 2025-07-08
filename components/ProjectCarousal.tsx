@@ -1,6 +1,4 @@
 //  /components/ProjectCarousal.tsx
-
-
 "use client";
 
 import {
@@ -90,16 +88,45 @@ const ProjectCarousel = () => {
   }, []);
 
   // Handle drag start - pause auto-scroll
-  const handleDragStart = () => {
+  // Add this state to track if it's a drag or click
+  const [dragStartPosition, setDragStartPosition] = useState({ x: 0, y: 0 });
+
+  // Modify handleDragStart
+  const handleDragStart = (event: MouseEvent | TouchEvent | PointerEvent) => {
     setIsDragging(true);
+    const clientX =
+      "touches" in event ? event.touches[0].clientX : event.clientX;
+    const clientY =
+      "touches" in event ? event.touches[0].clientY : event.clientY;
+    setDragStartPosition({ x: clientX, y: clientY });
   };
 
-  // Handle drag end with momentum and infinite loop logic
+  // Modify handleDragEnd
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
   ) => {
     setIsDragging(false);
+
+    // Check if this was actually a drag or just a click
+    const clientX =
+      "changedTouches" in event
+        ? event.changedTouches[0].clientX
+        : event.clientX;
+    const clientY =
+      "changedTouches" in event
+        ? event.changedTouches[0].clientY
+        : event.clientY;
+
+    const dragDistance = Math.sqrt(
+      Math.pow(clientX - dragStartPosition.x, 2) +
+        Math.pow(clientY - dragStartPosition.y, 2)
+    );
+
+    // If drag distance is small, it was likely a click - don't prevent it
+    if (dragDistance < 10) {
+      return;
+    }
 
     const currentX = x.get();
     const velocity = info.velocity.x;
@@ -185,6 +212,16 @@ const ProjectCarousel = () => {
                 delay: (index % projects.length) * 0.1,
                 duration: 0.6,
                 ease: "easeOut",
+              }}
+              onClick={(e) => {
+                // Only navigate if not dragging
+                if (!isDragging) {
+                  e.stopPropagation();
+                  const router = useRouter();
+                  if (project.slug) {
+                    router.push(`/projects?project=${project.slug}`);
+                  }
+                }
               }}
             >
               <ProjectCard {...project} index={index} />
