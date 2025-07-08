@@ -16,6 +16,23 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    title: "Tori",
+    slug: "tori",
+    category: ["3D Environment", "Architecture", "Nature"],
+    description:
+      "An intricately designed shrine environment featuring spiritual ambiance and architectural finesse.",
+    media: [
+      { type: "video", url: "/Project_Media/Videos/LS_Slow-Track-Shot.mp4" },
+      { type: "image", url: "/Project_Media/Tori/R1_1.jpeg" },
+      { type: "image", url: "/Project_Media/Tori/R2_1.jpeg" },
+      { type: "image", url: "/Project_Media/Tori/R3_1.jpeg" },
+      { type: "image", url: "/Project_Media/Tori/R1.jpeg" },
+      { type: "image", url: "/Project_Media/Tori/R2.jpeg" },
+      { type: "image", url: "/Project_Media/Tori/R3.jpeg" },
+    ],
+    software: ["Unreal Engine", "Blender", "Substance Painter"],
+  },
+  {
     title: "The Canyon",
     slug: "canyon",
     category: ["3D Environment", "Video Environment"],
@@ -126,21 +143,5 @@ export const projects: Project[] = [
       { type: "image", url: "/Project_Media/Shrine/Shrine_6.jpg" },
     ],
     software: ["Unreal Engine"],
-  },
-  {
-    title: "Tori",
-    slug: "tori",
-    category: ["3D Environment", "Architecture", "Nature"],
-    description:
-      "An intricately designed shrine environment featuring spiritual ambiance and architectural finesse.",
-    media: [
-      { type: "image", url: "/Project_Media/Shrine/Shrine_1.jpg" },
-      { type: "image", url: "/Project_Media/Shrine/Shrine_2.jpg" },
-      { type: "image", url: "/Project_Media/Shrine/Shrine_3.jpg" },
-      { type: "image", url: "/Project_Media/Shrine/Shrine_4.jpg" },
-      { type: "image", url: "/Project_Media/Shrine/Shrine_5.jpg" },
-      { type: "image", url: "/Project_Media/Shrine/Shrine_6.jpg" },
-    ],
-    software: ["Unreal Engine", "Blender"],
   },
 ];
