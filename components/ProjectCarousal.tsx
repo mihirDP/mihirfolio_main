@@ -185,7 +185,7 @@ const ProjectCarousel = () => {
         <motion.div
           className="flex gap-10 cursor-grab active:cursor-grabbing"
           style={{ x }}
-          drag="x"
+          drag="x" // This is capturing all mouse events
           dragConstraints={{
             left: -totalWidth + carouselWidth,
             right: 0,
@@ -195,36 +195,14 @@ const ProjectCarousel = () => {
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
           whileDrag={{ cursor: "grabbing" }}
-          transition={{
-            type: "spring",
-            stiffness: 300,
-            damping: 30,
-          }}
         >
           {infiniteProjects.map((project, index) => (
             <motion.div
               key={`${project.title}-${index}`}
               className="flex-shrink-0"
-              style={{ width: cardWidth }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: (index % projects.length) * 0.1,
-                duration: 0.6,
-                ease: "easeOut",
-              }}
-              onClick={(e) => {
-                // Only navigate if not dragging
-                if (!isDragging) {
-                  e.stopPropagation();
-                  const router = useRouter();
-                  if (project.slug) {
-                    router.push(`/projects?project=${project.slug}`);
-                  }
-                }
-              }}
             >
-              <ProjectCard {...project} index={index} />
+              <ProjectCard {...project} index={index} />{" "}
+              {/* Share button is here but gets blocked */}
             </motion.div>
           ))}
         </motion.div>
